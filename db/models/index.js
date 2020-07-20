@@ -1,3 +1,4 @@
-import User from "./User"
+const User = require('./user')
+const Sentence = require('./sentence')
 
-module.exports = { User }
+module.exports = { User, Sentence }

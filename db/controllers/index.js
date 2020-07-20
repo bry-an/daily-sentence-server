@@ -1,4 +1,4 @@
-const sentence = require('./sentence')
-const user = require('./user')
+const Sentence = require('./sentenceController')
+const User = require('./userController')
 
-module.exports = { sentence, user }
+module.exports = { Sentence, User }

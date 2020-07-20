@@ -11,9 +11,9 @@ const app = express()
 
 app.use(helmet())
 app.use(cors())
-app.use(Router)
-app.use(morgan())
+app.use(morgan('tiny'))
 app.use(bodyParser.json())
+app.use(Router)
 
 
 module.exports = app

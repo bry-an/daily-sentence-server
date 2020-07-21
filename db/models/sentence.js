@@ -4,7 +4,7 @@ const SentenceSchema = Schema(
     {
         date: {type: Date, required: true},
         sentence: {type: String, required: true},
-        user: [{type: Schema.Types.ObjectId, ref: "User"}]
+        user: {type: Schema.Types.ObjectId, ref: "User"}
     }, 
     { timestamps: true }
 );

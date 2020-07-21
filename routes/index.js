@@ -2,7 +2,6 @@
 const express = require('express')
 const Router = express.Router()
 const { User, Sentence } = require('../db/controllers')
-const { response } = require('../server')
 
 Router.get('/', (req, res) => {
     return res

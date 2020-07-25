@@ -4,12 +4,12 @@ const app = require('../server')
 describe('API', () => {
     it('responds base GET with 200', done => {
         request(app)
-        .get('/')
-        .expect(200)
-        .end(function(err, res) {
-            if (err) return done(err);
-            done();
-        });
+            .get('/')
+            .expect(200)
+            .end(function(err, res) {
+                if (err) return done(err);
+                done();
+            });
     })
     it('gives informative not found error ', done => {
         request(app)

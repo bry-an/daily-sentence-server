@@ -4,4 +4,9 @@ function notFound(req, res, next) {
     next(error);
   }
 
-module.exports = { notFound, logger }
+  function logger(req, res, next) {
+    // console.log("LOGGER: response body", res)
+    next()
+  }
+
+module.exports = { notFound, logger}

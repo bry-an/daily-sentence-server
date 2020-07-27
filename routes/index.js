@@ -13,4 +13,7 @@ Router.route('/sentence/:id').put(Sentence.update);
 Router.route('/sentence/:id').delete(Sentence.delete);
 Router.route('/sentence/find/').post(Sentence.find);
 
+Router.route('/user/:id').get(User.findById);
+Router.route('/user/').post(User.create);
+
 module.exports = Router;

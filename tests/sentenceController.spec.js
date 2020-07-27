@@ -3,7 +3,7 @@ const app = require('../server');
 
 let ephemeralSentenceId = 0;
 // eventually use a seeder to deal with this
-const exampleSentenceId = '5f1e0616265ac25116e5c9e0';
+const exampleSentenceId = '5f1e52f02911dd61b8ca4314';
 
 describe('Sentence Controller', () => {
   it('Creates a sentence', (done) => {
@@ -14,6 +14,17 @@ describe('Sentence Controller', () => {
       .end((err, res) => {
         if (err) return done(err);
         ephemeralSentenceId = res.body._id;
+        expect(res.body._id).toBeTruthy();
+        return done();
+      });
+  });
+  it('Finds by sentence', (done) => {
+    request(app)
+      .post('/sentence/find')
+      .send({ sentence: 'hello world!' })
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
         expect(res.body._id).toBeTruthy();
         return done();
       });
@@ -50,17 +61,6 @@ describe('Sentence Controller', () => {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.body.sentence).toEqual(sentence);
-        return done();
-      });
-  });
-  it('Finds by sentence', (done) => {
-    request(app)
-      .post('/sentence/find')
-      .send({ sentence: 'A unique sentence name' })
-      .expect(200)
-      .end((err, res) => {
-        if (err) return done(err);
-        expect(res.body._id).toBeTruthy();
         return done();
       });
   });

@@ -1,15 +1,19 @@
-const { Sentence } = require('../models');
+const { Sentence, User } = require('../models');
 
 module.exports = {
-  create: (req, res) => {
-    Sentence
-      .create(req.body)
-      .then((dbModel) => res.json(dbModel))
-      .catch((err) => res.status(422).send(err));
+  create: async (req, res) => {
+    try {
+      const dbModel = await Sentence.create(req.body);
+      await User.findOneAndUpdate(req.body.user, { $push: { sentences: dbModel._id } });
+      res.json(dbModel);
+    } catch (err) {
+      res.status(422).send(err);
+    }
   },
   findById: (req, res) => {
     Sentence
       .findById(req.params.id)
+      .populate('user')
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).send(err));
   },

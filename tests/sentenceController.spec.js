@@ -5,7 +5,7 @@ let ephemeralSentenceId = 0;
 // eventually use a seeder to deal with this
 const exampleSentenceId = '5f1e52f02911dd61b8ca4314';
 
-describe('Sentence Controller', () => {
+describe('Sentence Controller CRUD', () => {
   it('Creates a sentence', (done) => {
     request(app)
       .post('/sentence')
@@ -18,14 +18,27 @@ describe('Sentence Controller', () => {
         return done();
       });
   });
-  it('Finds by sentence', (done) => {
+  it('Gets by id', (done) => {
     request(app)
-      .post('/sentence/find')
-      .send({ sentence: 'hello world!' })
+      .get(`/sentence/${ephemeralSentenceId}`)
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);
-        expect(res.body._id).toBeTruthy();
+        expect(res.body._id).toEqual(ephemeralSentenceId);
+        return done();
+      });
+  });
+  it('Updates a sentence', (done) => {
+    const randomInt = Math.floor(Math.random() * 26);
+    const randomLetter = String.fromCharCode(randomInt + 97);
+    const sentence = `Automated Test: ${randomLetter}`;
+    request(app)
+      .put(`/sentence/${ephemeralSentenceId}`)
+      .send({ sentence })
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.body.sentence).toEqual(sentence);
         return done();
       });
   });
@@ -36,31 +49,6 @@ describe('Sentence Controller', () => {
       .end((err, res) => {
         if (err) return done(err);
         expect(res.body._id).toBeTruthy();
-        return done();
-      });
-  });
-  it('Finds a sentence', (done) => {
-    request(app)
-      .get(`/sentence/${exampleSentenceId}`)
-      .query({ id: exampleSentenceId })
-      .expect(200)
-      .end((err, res) => {
-        if (err) return done(err);
-        expect(res.body._id).toEqual(exampleSentenceId);
-        return done();
-      });
-  });
-  it('Updates a sentence', (done) => {
-    const randomInt = Math.floor(Math.random() * 26);
-    const randomLetter = String.fromCharCode(randomInt + 97);
-    const sentence = `Automated Test: ${randomLetter}`;
-    request(app)
-      .put(`/sentence/${exampleSentenceId}`)
-      .send({ sentence })
-      .expect(200)
-      .end((err, res) => {
-        if (err) return done(err);
-        expect(res.body.sentence).toEqual(sentence);
         return done();
       });
   });

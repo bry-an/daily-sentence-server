@@ -7,32 +7,44 @@ module.exports = {
       await User.findOneAndUpdate(req.body.user, { $push: { sentences: dbModel._id } });
       res.json(dbModel);
     } catch (err) {
-      res.status(422).send(err);
+      res.status(500).json(err);
     }
   },
-  findById: (req, res) => {
-    Sentence
-      .findById(req.params.id)
-      .populate('user')
-      .then((dbModel) => res.json(dbModel))
-      .catch((err) => res.status(422).send(err));
+  findById: async (req, res) => {
+    try {
+      const dbModel = await Sentence
+        .findById(req.params.id)
+        .populate('user');
+      res.json(dbModel);
+    } catch (err) {
+      res.status(500).json(err);
+    }
   },
-  update: (req, res) => {
-    Sentence
-      .findByIdAndUpdate(req.params.id, req.body, { new: true })
-      .then((dbResponse) => res.json(dbResponse))
-      .catch((err) => res.status(422).send(err));
+  update: async (req, res) => {
+    try {
+      const dbModel = await Sentence
+        .findByIdAndUpdate(req.params.id, req.body, { new: true });
+      res.json(dbModel);
+    } catch (err) {
+      res.status(500).json(err);
+    }
   },
-  delete: (req, res) => {
-    Sentence
-      .findByIdAndDelete(req.params.id)
-      .then((dbResponse) => res.json(dbResponse))
-      .catch((err) => res.status(422).send(err));
+  delete: async (req, res) => {
+    try {
+      const dbResponse = await Sentence
+        .findByIdAndDelete(req.params.id);
+      res.json(dbResponse);
+    } catch (err) {
+      res.status(500).json(err);
+    }
   },
-  find: (req, res) => {
-    Sentence
-      .findOne(req.body)
-      .then((dbResponse) => res.json(dbResponse))
-      .catch((err) => res.status(422).send(err));
+  find: async (req, res) => {
+    try {
+      const dbModel = Sentence
+        .findOne(req.body);
+      res.json(dbModel);
+    } catch (err) {
+      res.status(422).json(err);
+    }
   },
 };

@@ -3,13 +3,11 @@ const app = require('../server');
 
 let ephemeralSentenceId = 0;
 // eventually use a seeder to deal with this
-const exampleSentenceId = '5f1e52f02911dd61b8ca4314';
-
 describe('Sentence Controller CRUD', () => {
   it('Creates a sentence', (done) => {
     request(app)
-      .post('/sentence')
-      .send({ date: '2002-12-09T00:00:00.000Z', sentence: 'hello world!' })
+      .post('/sentence/create')
+      .send({ date: '2002-12-09T00:00:00.000Z', sentence: 'hello world!', userId: '5' })
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);
@@ -45,11 +43,9 @@ describe('Sentence Controller CRUD', () => {
   it('Deletes a sentence', (done) => {
     request(app)
       .delete(`/sentence/${ephemeralSentenceId}`)
-      .expect(200)
-      .end((err, res) => {
-        if (err) return done(err);
-        expect(res.body._id).toBeTruthy();
-        return done();
+      .expect(204)
+      .end((err) => {
+        return done(err ?? '')
       });
   });
 });

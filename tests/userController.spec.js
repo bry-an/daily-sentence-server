@@ -8,7 +8,7 @@ describe('User Controller', () => {
     const randomLetters = String.fromCharCode(randomIntOne + 97)
         + String.fromCharCode(randomIntTwo + 97);
     request(app)
-      .post('/user')
+      .post('/user/create')
       .send({ username: `test_${randomLetters}@test.com` })
       .expect(200)
       .end((err, res) => {

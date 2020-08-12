@@ -15,7 +15,7 @@ Router.route('/sentence/:id').delete(Sentence.delete);
 Router.route('/sentence/find/').post(Sentence.find);
 
 Router.route('/user/:id').get(User.findById);
-Router.route('/create-user').post(User.create);
+Router.route('/user').post(User.create);
 Router.route('/user/:id').delete(User.delete);
 Router.route('/:id/sentences').get(Sentence.sentencesByUser);
 Router.route('/user/:id/').patch(User.update);

@@ -8,12 +8,12 @@ describe('User Controller', () => {
     const randomLetters = String.fromCharCode(randomIntOne + 97)
         + String.fromCharCode(randomIntTwo + 97);
     request(app)
-      .post('/user/create')
+      .post('/user')
       .send({ username: `test_${randomLetters}@test.com` })
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);
-        expect(res.body._id).toBeTruthy();
+        expect(res.body.user._id).toBeTruthy();
         return done();
       });
   });

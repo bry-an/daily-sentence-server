@@ -1,18 +1,18 @@
 const request = require('supertest');
 const app = require('../server');
 
-let ephemeralSentenceId = 0;
 // eventually use a seeder to deal with this
+let ephemeralSentenceId = 0;
 describe('Sentence Controller CRUD', () => {
   it('Creates a sentence', (done) => {
     request(app)
       .post('/sentence/create')
-      .send({ date: '2002-12-09T00:00:00.000Z', sentence: 'hello world!', userId: '5' })
-      .expect(200)
+      .send({ date: '2002-12-09T00:00:00.000Z', text: 'hello world!', userId: '5f25fb93aa155f33be02a25a' })
+      // .expect(200)
       .end((err, res) => {
         if (err) return done(err);
-        ephemeralSentenceId = res.body._id;
-        expect(res.body._id).toBeTruthy();
+        ephemeralSentenceId = res.body.sentence._id;
+        expect(res.body.sentence._id).toBeTruthy();
         return done();
       });
   });
@@ -22,21 +22,21 @@ describe('Sentence Controller CRUD', () => {
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);
-        expect(res.body._id).toEqual(ephemeralSentenceId);
+        expect(res.body.sentence._id).toEqual(ephemeralSentenceId);
         return done();
       });
   });
   it('Updates a sentence', (done) => {
     const randomInt = Math.floor(Math.random() * 26);
     const randomLetter = String.fromCharCode(randomInt + 97);
-    const sentence = `Automated Test: ${randomLetter}`;
+    const text = `Automated Test: ${randomLetter}`;
     request(app)
       .put(`/sentence/${ephemeralSentenceId}`)
-      .send({ sentence })
+      .send({ text })
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);
-        expect(res.body.sentence).toEqual(sentence);
+        expect(res.body.sentence).toEqual(text);
         return done();
       });
   });
@@ -45,7 +45,8 @@ describe('Sentence Controller CRUD', () => {
       .delete(`/sentence/${ephemeralSentenceId}`)
       .expect(204)
       .end((err) => {
-        return done(err ?? '')
+        if (err) return done(err);
+        return done();
       });
   });
 });

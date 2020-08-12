@@ -9,45 +9,45 @@ module.exports = {
           req.body.userId,
           { $push: { sentences: sentence._id } },
         );
-      res.json({ sentence });
+      return res.json({ sentence });
     } catch (err) {
-      res.status(500).json(err);
+      return res.status(500).json(err);
     }
   },
   findById: async (req, res) => {
     try {
       const sentence = await Sentence
         .findById(req.params.id);
-      res.json(sentence);
+      return res.json({ sentence });
     } catch (err) {
-      res.status(500).json(err);
+      return res.status(500).json(err);
     }
   },
   update: async (req, res) => {
     try {
       const sentence = await Sentence
         .findByIdAndUpdate(req.params.id, req.body, { new: true });
-      res.json(sentence);
+      return res.json({ sentence: sentence.text });
     } catch (err) {
-      res.status(500).json(err);
+      return res.status(500).json(err);
     }
   },
   delete: async (req, res) => {
     try {
       await Sentence
         .findByIdAndDelete(req.params.id);
-      res.status(204).json();
+      return res.status(204).json();
     } catch (err) {
-      res.status(500).json(err);
+      return res.status(500).json(err);
     }
   },
   find: async (req, res) => {
     try {
       const sentence = Sentence
         .findOne(req.body);
-      res.json(sentence);
+      return res.json({ sentence });
     } catch (err) {
-      res.status(500).json(err);
+      return res.status(500).json(err);
     }
   },
   sentencesByUser: async (req, res) => {
@@ -55,9 +55,9 @@ module.exports = {
       const user = await User
         .findById(req.params.id)
         .populate('sentences', 'sentence');
-      res.json(user);
+      return res.json({ sentences: user.sentences });
     } catch (err) {
-      res.status(500).json(err);
+      return res.status(500).json(err);
     }
   },
 };

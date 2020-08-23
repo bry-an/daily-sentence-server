@@ -9,4 +9,11 @@ function logger(req, res, next) {
   next();
 }
 
-module.exports = { notFound, logger };
+function stripDataWrapper(req, res, next) {
+  if (req.body.data && req.body.data.axios) {
+    req.body = req.body.data;
+  }
+  next();
+}
+
+module.exports = { notFound, logger, stripDataWrapper };

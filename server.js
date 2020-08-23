@@ -14,6 +14,7 @@ app.use(cors());
 app.use(morgan('tiny'));
 app.use(bodyParser.json());
 app.use(middlewares.logger);
+app.use(middlewares.stripDataWrapper);
 app.use(Router);
 app.use(middlewares.notFound);
 

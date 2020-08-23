@@ -54,7 +54,7 @@ module.exports = {
     try {
       const user = await User
         .findById(req.params.id)
-        .populate('sentences', 'sentence');
+        .populate('sentences', 'text');
       return res.json({ sentences: user.sentences });
     } catch (err) {
       return res.status(500).json(err);

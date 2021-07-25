@@ -18,7 +18,7 @@ module.exports = {
     try {
       const sentence = await Sentence
         .findById(req.params.id);
-      return res.json({ sentence });
+	  return res.json({ sentence });
     } catch (err) {
       return res.status(500).json(err);
     }
@@ -54,7 +54,7 @@ module.exports = {
     try {
       const user = await User
         .findById(req.params.id)
-        .populate('sentences');
+        .populate({ path: 'sentences', options: { sort: { createdAt: -1 } } });
       return res.json({ sentences: user.sentences });
     } catch (err) {
       return res.status(500).json(err);

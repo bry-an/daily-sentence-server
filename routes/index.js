@@ -8,7 +8,7 @@ Router.get('/', (req, res) => res
   .send('Healthy'));
 
 // /user/5f25efed08aee6317394d5ba/sentence/create
-Router.route('/sentence/create').post(Sentence.create);
+Router.route('/sentence').post(Sentence.create);
 Router.route('/sentence/:id').get(Sentence.findById);
 Router.route('/sentence/:id').put(Sentence.update);
 Router.route('/sentence/:id').delete(Sentence.delete);

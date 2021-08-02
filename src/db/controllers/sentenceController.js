@@ -1,3 +1,5 @@
+const { respondWithMalformedError } = require('../../util.js');
+
 const { Sentence, User } = require('../models');
 
 module.exports = {
@@ -24,6 +26,9 @@ module.exports = {
     }
   },
   update: async (req, res) => {
+    if (!req.params.id) {
+      respondWithMalformedError(res);
+    }
     try {
       const sentence = await Sentence
         .findByIdAndUpdate(req.params.id, req.body, { new: true });

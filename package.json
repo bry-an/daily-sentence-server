@@ -19,6 +19,7 @@
     "mongoose": "^5.9.25",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.4",
+    "ramda": "^0.27.1",
     "supertest": "^4.0.2"
   },
   "devDependencies": {
